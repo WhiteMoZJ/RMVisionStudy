@@ -1,5 +1,6 @@
 ﻿#include "buff_detect.h"
 #include <iostream>
+#include <cmath>
 
 /*
 * @brief	能量机关装甲板识别
@@ -26,8 +27,8 @@ void BuffDetect::buffDetect(cv::Mat& pic, cv::Mat& pic_pro)
             angleTrans();       //后续加入滤波防抖
             Utils::drawRect(pic, locs);
             Utils::drawPoint(pic, pt_pre, "Predict");
-            cv::line(pic, pt_cur, utils.center, cv::Scalar(0, 0, 255), 5);
-            cv::line(pic, pt_pre, utils.center, cv::Scalar(0, 0, 255), 5);
+            cv::line(pic, pt_cur, utils.center, cv::Scalar(0, 0, 255), 3);
+            cv::line(pic, pt_pre, utils.center, cv::Scalar(0, 0, 255), 3);
         }
     }
 }
@@ -56,8 +57,10 @@ double BuffDetect::angularVelocity()
 
 cv::Point2d trans(cv::Point2d point, cv::Point2d& center, double& theta)
 {
-    cv::Mat R = (cv::Mat_<double>(2, 2) << cos(theta), -sin(theta), sin(theta), cos(theta));
-    cv::Mat vector_target = (cv::Mat_<double>(2, 1) << point.x - center.x, point.y - center.y);
+    cv::Mat R = (cv::Mat_<double>(2, 2) << std::cos(theta), -std::sin(theta),
+                                                        std::sin(theta), std::cos(theta));
+    cv::Mat vector_target = (cv::Mat_<double>(2, 1) << point.x - center.x,
+                                                                    point.y - center.y);
     cv::Mat vector_predict = R * vector_target;
     cv::Point2d predict(vector_predict);
     return predict;
@@ -68,7 +71,7 @@ cv::Point2d trans(cv::Point2d point, cv::Point2d& center, double& theta)
 */
 void BuffDetect::angleTrans()
 {
-    double w = -angularVelocity()/3140;   //由于angularVelocity()得出的角速度单位为像素，进行简单换算（角度）
+    double w = -angularVelocity()/150000;   //由于angularVelocity()得出的角速度单位为像素，进行简单换算（角度）
     if (w > 0) std::cout << std::abs(w) << " counterclockwise\n";
     else std::cout << std::abs(w) << " clockwise\n";
     double sum = 0;
@@ -76,19 +79,18 @@ void BuffDetect::angleTrans()
         avg.emplace_back(w);
     }
     if (avg.size() > 15) {
-        auto p = avg.begin();
+        auto p = avg.begin();   //后期由卡尔曼替代
         avg.erase(p);
     }
     for (double& i : avg) {
         sum += i;
     }
     w = sum / avg.size();
-    //std::cout << w << std::endl;
+    std::cout << w << std::endl;
     double theta = w * 1;                   //规定时间转过的角度
-    cv::Point2d predict = trans(pt_cur, utils.center, theta);
-    pt_pre = predict + utils.center;
+    //std::cout << theta << std::endl;
+    pt_pre = trans(pt_cur, utils.center, theta) + utils.center;
     for (auto & loc : locs) {
-        cv::Point2d predict = trans(loc, utils.center, theta);
-        loc = predict + utils.center;
+        loc = trans(loc, utils.center, theta) + utils.center;
     }
 }

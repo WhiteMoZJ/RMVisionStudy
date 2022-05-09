@@ -25,7 +25,7 @@ public:
 	}
 	~Utils(){ std::vector<cv::Point2d>().swap(circle_points); }
 	void trackBar();
-	static void drawRect(cv::Mat& pic, cv::Point2f locs[4]);
+	static void drawRect(cv::Mat& pic, cv::Point2f locs[]);
 	static void drawPoint(cv::Mat& pic, cv::Point2d& point, const cv::String& text);
 	void drawFittingCircle(cv::Mat& pic, cv::Point2d& point);
 	int leastSquaresCircleFitting(cv::Point2d& center, double& radius);

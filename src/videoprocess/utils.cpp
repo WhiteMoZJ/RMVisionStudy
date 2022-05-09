@@ -59,7 +59,7 @@ void Utils::drawFittingCircle(cv::Mat& pic, cv::Point2d& point)
 		circle_points.erase(p);
 	}
 	leastSquaresCircleFitting(center, radius);						//拟合圆
-	cv::circle(pic, center, cvRound(radius), cv::Scalar(255, 255, 255), 1, 8);	//绘制拟合圆
+	cv::circle(pic, center, (int)radius, cv::Scalar(0, 255, 0), 2, 8);	//绘制拟合圆
 	drawPoint(pic, center, "Center");			//绘制圆心
 	//std::cout << "Center" << center << std::endl;
 	//std::cout << "Radius" << radius << std::endl;
