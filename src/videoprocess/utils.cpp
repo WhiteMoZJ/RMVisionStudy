@@ -39,10 +39,11 @@ void Utils::drawRect(cv::Mat& pic, cv::Point2f locs[])
 void Utils::drawPoint(cv::Mat& pic, cv::Point2d& point, const cv::String& text)
 {
 	cv::putText(pic, text, point, 0, 1, cv::Scalar(255, 255, 255), 2);
-	cv::circle(pic, point, 4, cv::Scalar(255, 0, 255), -1, 8);
-    cv::putText(pic, "X " + std::to_string(point.x), cv::Point(point.x, point.y + 20),
+	cv::circle(pic, point, 5, cv::Scalar(255, 255, 255), 2, 8);
+	//标记坐标 已将原点转换为画面中心的常规坐标系
+    cv::putText(pic, "X " + std::to_string(point.x - 391), cv::Point(point.x, point.y + 20),
 		cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(255, 255, 255), 1, 8);
-    cv::putText(pic, "Y " + std::to_string(point.y), cv::Point(point.x, point.y + 37),
+    cv::putText(pic, "Y " + std::to_string(-point.y + 334), cv::Point(point.x, point.y + 37),
 		cv::FONT_HERSHEY_SIMPLEX, 0.6, cv::Scalar(255, 255, 255), 1, 8);  //显示坐标//显示坐标
 }
 

@@ -57,5 +57,6 @@ void VideoProcess::processVideo()
     cv::threshold(pic_pro, pic_pro, ST.utils.tresh, 255, cv::THRESH_BINARY);	//二值化
 	cv::dilate(pic_pro, pic_pro, kernel);										//膨胀
 	cv::morphologyEx(pic_pro, pic_pro, cv::MORPH_CLOSE, kernel);				//闭运算
-	//cv::Canny(pic_pro, pic_pro, 5, 200);		//略微提高识别精准度 但对运算速度影响较大 10~15ms
+    //略微提高识别精准度 但对运算速度影响较大 10~15ms 但相对轮廓关系会发生改变
+	//cv::Canny(pic_pro, pic_pro, 5, 200);
 }
