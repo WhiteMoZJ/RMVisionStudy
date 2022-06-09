@@ -55,6 +55,12 @@ double BuffDetect::angularVelocity()
     //整个坐标默认为右手系，逆时针为正，顺时针为负
 }
 
+/*
+* @brief	角度转换点
+* @param cv::Point2d point			转换点
+* @param cv::Point2d& center		圆心
+* @param double& theta              转换角度
+*/
 cv::Point2d trans(cv::Point2d point, cv::Point2d& center, double& theta)
 {
     cv::Mat R = (cv::Mat_<double>(2, 2) << std::cos(theta), -std::sin(theta),

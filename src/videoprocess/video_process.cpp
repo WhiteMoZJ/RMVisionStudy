@@ -9,15 +9,15 @@ void VideoProcess::getVideo()
 {
 	//！这里设置了重复播放
     // Warning: endless loop
-	while (1)
+	while (true)
 	{
 		cv::VideoCapture video(video_add);
-		while (1)
+		//cv::VideoCapture video(cam_add);
+		while (true)
 		{
 			clock_t time_start = clock();
 			video >> pic;
 			pic.copyTo(pic_pro);	//复制一份图像
-			//setExposure();
 			if (pic.empty()) {
 				break;
 			}
@@ -57,6 +57,6 @@ void VideoProcess::processVideo()
     cv::threshold(pic_pro, pic_pro, ST.utils.tresh, 255, cv::THRESH_BINARY);	//二值化
 	cv::dilate(pic_pro, pic_pro, kernel);										//膨胀
 	cv::morphologyEx(pic_pro, pic_pro, cv::MORPH_CLOSE, kernel);				//闭运算
-    //略微提高识别精准度 但对运算速度影响较大 10~15ms 但相对轮廓关系会发生改变
+    //略微提高识别精准度 但对运算速度影响较大 ~5ms 但相对轮廓关系会发生改变
 	//cv::Canny(pic_pro, pic_pro, 5, 200);
 }
