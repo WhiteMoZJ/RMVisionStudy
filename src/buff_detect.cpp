@@ -10,7 +10,7 @@
 void BuffDetect::buffDetect(cv::Mat& pic, cv::Mat& pic_pro)
 {
 	findContours(pic_pro, contours, hierarchy, cv::RETR_CCOMP, cv::CHAIN_APPROX_NONE);
-    for (int i = 0; i < hierarchy.size(); i++)
+    for (unsigned i = 0; i < hierarchy.size(); i++)
     {
         //std::cout << "Hierarchy" << hierarchy[i] << std::endl;
         //判断矩形序列
