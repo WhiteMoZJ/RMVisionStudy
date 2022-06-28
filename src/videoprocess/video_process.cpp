@@ -11,8 +11,9 @@ void VideoProcess::getVideo()
     // Warning: endless loop
 	while (true)
 	{
-		cv::VideoCapture video(video_add);
-		//cv::VideoCapture video(cam_add);
+        cv::VideoCapture video(video_add);
+        //video.set(cv::CAP_PROP_FPS, 30);
+        //cv::VideoCapture video(cam_add);
 		while (true)
 		{
 			clock_t time_start = clock();

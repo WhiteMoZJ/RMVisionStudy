@@ -16,9 +16,11 @@ public:
 	BuffDetect BD;			//调用识别类对象
 	//初始化 调用工具
     VideoProcess():video_add("O:/VSCProject/cpp/OpenCV_Cmake/src/video/buff.mp4"), cam_add(0)
-    { ST.utils.trackBar();
-    cv::namedWindow("Origin", cv::WINDOW_NORMAL);
-    cv::namedWindow("Test", cv::WINDOW_NORMAL);
+    {
+        ST.utils.trackBar();
+
+        cv::namedWindow("Origin", cv::WINDOW_NORMAL);
+        cv::namedWindow("Test", cv::WINDOW_NORMAL);
     }
     ~VideoProcess() { cv::destroyAllWindows(); }
 	void getVideo();		//图像缓存
